@@ -1,1 +1,1 @@
-GET http://localhost:3001/currentsId/
+GET http://vpbackend-utu.herokuapp.com/currentsId/
