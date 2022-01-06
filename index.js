@@ -81,13 +81,24 @@ app.get("/getToken/:email", (req,res) => {
   
 })
 
-
-
 app.get("/", (req, res) => {
   res.send("<h1>Hello! This is VONAGE-backend</H1>");
 });
 
-
+/** sending signals to be continued 
+//sending  signals i.e. CHAT
+app.post("/chat/",(req,res)=> {
+  const payload = req.body
+  opentok.signal(
+    current_session_id,
+    null,
+    { type: "chat", data: payload },
+    function (error) {
+      if (error) return console.log("error:", error);
+    }
+  );
+})
+*/
 
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
