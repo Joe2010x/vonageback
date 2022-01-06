@@ -16,7 +16,22 @@ let current_session_id =
   "2_MX40NzQxMDU3MX5-MTY0MTQ5OTY5NDIyNn5HR1R2cW52TGtrV1RybEt5ZU8zWWtFNG5-fg"
 const opentok = new OpenTok(process.env.VONAGE_KEY, process.env.VONAGE_SECRET)
 
-const vp_group_List = require('./nameList.json')
+//const nl = require('./nameList.json')
+
+let vp_group_List = {persons:[]}
+//console.log(nl.persons[0])
+//vp_group_List.persons=nl.persons.concat()
+//console.log(vp_group_List)
+
+app.post('/upload_group/',(req,res) => {
+  const name_list = req.body
+  console.log(name_list.persons[0])
+  //console.log(name_list)
+
+  vp_group_List.persons=name_list.persons.concat()
+  console.log(vp_group_List)
+  res.status(200).json({done:"name list is uploaded."})
+})
 
 app.get("/get_list/", (req, res) => {
   res.send(vp_group_List)
@@ -67,7 +82,6 @@ app.get("/getToken/:email", (req,res) => {
   //console.log(email)
 
   const person = vp_group_List.persons.find(item=>item.email === email) 
-
   //console.log(person)
 
   //check session id 
