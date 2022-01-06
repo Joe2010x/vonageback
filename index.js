@@ -1,28 +1,45 @@
 const http = require('http')
 const express = require('express')
 const app = express()
+const cors = require('cors')
 
 require("dotenv").config()
 
+app.use(cors())
+app.use(express.json())
 
 const OpenTok = require("opentok")
 const { write } = require('fs')
+
+let current_session_id = ""
 const opentok = new OpenTok(process.env.VONAGE_KEY, process.env.VONAGE_SECRET)
 
-const nameList = require('./nameList.json')
+const vp_group_List = require('./nameList.json')
 
-console.log(nameList)
-//console.log(process.env.VONAGE_KEY);
-//console.log(process.env.VONAGE_SECRET);
+//console.log(nameList)
+
+
+// create a new session id
+app.get("/createNysId/", (req, res) => {
+  opentok.createSession(function (err, session) {
+    if (err)
+      return res.status(400).json({
+        message: err,
+      });
+    current_session_id = session.sessionId
+  });
+  res.send(current_session_id)
+})
+
+app.get("/currentsId/", (req, res) => {
+  if (current_session_id === '' ) {
+    res.send("no available session ID")
+  }
+  else {res.send(current_session_id)}
+})
+
 
 /* create a session id Transmit streams directly 
-opentok.createSession(function (err, session) {
-  if (err) return console.log(err);
-
-  // save the sessionId
-  //db.save("session", session.sessionId, done);
-  console.log(session.sessionId)
-});
 // create session ID
 // streams directly between
 // Media Router
