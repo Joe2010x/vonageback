@@ -37,6 +37,10 @@ app.get("/get_list/", (req, res) => {
   res.send(vp_group_List)
 })
 
+app.get('/vonageKey', (req,res) => {
+  res.send(process.env.VONAGE_KEY)
+})
+
 //console.log(nameList)
 
 /* create a session id Transmit streams directly 
