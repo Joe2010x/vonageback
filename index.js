@@ -91,7 +91,8 @@ app.get("/getToken/:email", (req,res) => {
   //check session id 
   if ((person) && (current_session_id !== "" )) {
     token = opentok.generateToken(current_session_id)
-    res.send(token)
+    res.send([person.name,token])
+    //res.send(token)
   } 
   else {
     res.status(404)
